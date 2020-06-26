@@ -9,7 +9,7 @@ const russianAlphabet = 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМ�
 const englishAlphabet = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'.split('');
 const bothAlphabets = englishAlphabet.concat(russianAlphabet);
 
-export function sortStrings(arr, param = 'lowerAsc') {
+export function sortStrings(arr, param = 'asc') {
   const arrToSort = arr.slice();
   return param === 'desc' ? arrToSort.sort(compare).reverse() : arrToSort.sort(compare);
 }
