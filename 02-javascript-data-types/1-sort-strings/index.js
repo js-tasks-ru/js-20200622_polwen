@@ -5,30 +5,20 @@
  * @returns {string[]}
  */
 
-const russianAlphabet = 'АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя'.split('');
-const englishAlphabet = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'.split('');
-const bothAlphabets = englishAlphabet.concat(russianAlphabet);
-
+ // решение с исопльзованием конструктора
 export function sortStrings(arr, param = 'asc') {
   const arrToSort = arr.slice();
-  return param === 'desc' ? arrToSort.sort(compare).reverse() : arrToSort.sort(compare);
+  const collator = new Intl.Collator(undefined, { caseFirst: 'upper' });
+
+  return param === 'desc' ? arrToSort.sort(collator.compare).reverse() : arrToSort.sort(collator.compare);
 }
 
+// другой вариант решения с использованием localCompare
 
-function compare(word1, word2) {
-  const numbersOfLettersInWord1 = transformToArrayOfNumbers(word1);
-  const numbersOfLettersInWord2 = transformToArrayOfNumbers(word2);
-  const length = word1.length > word2.length ? word1.length : word2.length;
+// function sortStrings(arr, param = 'asc') {
+//   const arrToSort = arr.slice();
 
-  for (let i = 0; i < length; i++) {
-    if (numbersOfLettersInWord1[i] < numbersOfLettersInWord2[i] || numbersOfLettersInWord1[i] === undefined) {
-      return -1;
-    }
-
-    if (numbersOfLettersInWord1[i] > numbersOfLettersInWord2[i] || numbersOfLettersInWord2[i] === undefined) {
-      return 1;
-    }
-  }
-}
-
-const transformToArrayOfNumbers = (word) => word.split('').map((letter) => bothAlphabets.indexOf(letter));
+//   return param === 'desc'
+//     ? arrToSort.sort((a, b) => a.localeCompare(b, undefined, { caseFirst: 'upper' })).reverse()
+//     : arrToSort.sort((a, b) => a.localeCompare(b, undefined, { caseFirst: 'upper' }));
+// }
