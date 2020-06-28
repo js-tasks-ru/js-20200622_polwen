@@ -62,4 +62,7 @@ module.exports = {
     'no-this-before-super': 'warn',
     'no-var': 'warn',
   },
+  "plugins": [
+    "prettier"
+  ]
 };
