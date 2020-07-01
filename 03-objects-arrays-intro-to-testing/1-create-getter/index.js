@@ -5,9 +5,8 @@
  */
 export function createGetter(path) {
   return (obj) => {
-    let acc = { ...obj };
-    path.split('.').forEach((key) => (acc.hasOwnProperty(key) ? (acc = acc[key]) : (acc = false)));
-    return acc === false ? undefined : acc;
+    path.split('.').forEach((key) => (obj.hasOwnProperty(key) ? (obj = obj[key]) : (obj = false)));
+    return obj === false ? undefined : obj;
   };
 }
 
