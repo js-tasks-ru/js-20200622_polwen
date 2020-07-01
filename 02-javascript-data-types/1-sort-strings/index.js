@@ -5,7 +5,7 @@
  * @returns {string[]}
  */
 
- // решение с исопльзованием конструктора
+ // решение с использованием конструктора
 export function sortStrings(arr, param = 'asc') {
   const arrToSort = arr.slice();
   const collator = new Intl.Collator(undefined, { caseFirst: 'upper' });
