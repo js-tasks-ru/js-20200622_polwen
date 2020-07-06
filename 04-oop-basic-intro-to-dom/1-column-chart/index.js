@@ -1,14 +1,10 @@
 export default class ColumnChart {
-  // element = null; // тесты ругаются если объявляю здесь
-  // chartHeight = 50
-
   constructor({ data = [], value = '', link = '', label = '' } = {}) {
     this.data = data;
     this.value = value;
     this.link = link;
     this.label = label;
 
-    // объявил здесь
     this.element = null;
     this.chartHeight = 50;
 
@@ -17,11 +13,9 @@ export default class ColumnChart {
 
   render() {
     this.element = document.createElement('div');
-    // this.element.setAttribute('style', '--chart-height: 50');
 
-    if (this.data.length === 0) {
+    if (!this.data.length) {
       this.element.classList.add('column-chart_loading');
-
     }
 
     this.element.innerHTML = `
@@ -42,16 +36,17 @@ export default class ColumnChart {
   }
 
   renderColumns(data) {
-    this.setScale();
+    const { max, scale } = this.setScale(data);
     return data.map((number) => {
-      const { currentValue, percents } = this.getValues(number, this.scale, this.max);
+      const { currentValue, percents } = this.getValues(number, scale, max);
       return `<div style="--value:${currentValue}" data-tooltip="${percents}%"></div>`;
     }).join('');
   }
 
-  setScale() {
-    this.max = Math.max(...this.data);
-    this.scale = this.chartHeight / this.max;
+  setScale(data) {
+    const max = Math.max(...data);
+    const scale = this.chartHeight / max;
+    return { max, scale };
   }
 
   getValues(number, scale, max) {
@@ -61,9 +56,7 @@ export default class ColumnChart {
   }
 
   update({ bodyData }) {
-    this.render();
-    // почему-то если перерендериривать не весь компонент, а только часть, то работает не очень. Выдает 100 вместо 50. Не понимаю :(
-    // this.element.querySelector('.column-chart__chart').innerHTML = this.renderColumns(bodyData);
+    this.element.querySelector('.column-chart__chart').innerHTML = this.renderColumns(bodyData);
   }
 
   remove() {
